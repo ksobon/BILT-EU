@@ -45,20 +45,17 @@ namespace Bilt
 
         private static void OnDocumentSynched(object sender, DocumentSynchronizedWithCentralEventArgs e)
         {
-            Handler.Request = RequestId.Refresh;
-            Event.Raise();
+            Refresh();
         }
 
         private static void OnDocumentSaved(object sender, DocumentSavedEventArgs e)
         {
-            Handler.Request = RequestId.Refresh;
-            Event.Raise();
+            Refresh();
         }
 
         private static void OnDocumentOpened(object sender, DocumentOpenedEventArgs e)
         {
-            Handler.Request = RequestId.Refresh;
-            Event.Raise();
+            Refresh();
         }
 
         public Result OnShutdown(UIControlledApplication app)
@@ -69,5 +66,15 @@ namespace Bilt
 
             return Result.Succeeded;
         }
+
+        #region Utilities
+
+        private static void Refresh()
+        {
+            Handler.Request = RequestId.Refresh;
+            Event.Raise();
+        }
+
+        #endregion
     }
 }

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bilt.DockablePanel
+﻿namespace Bilt.DockablePanel
 {
     public class DockablePanelModel
     {
-        public DockablePanelModel()
+        public void Refresh()
         {
+            AppCommand.Handler.Request = RequestId.Refresh;
+            AppCommand.Event.Raise();
         }
-
-        // TODO: Implement Refresh Method that will reach out to External Event Handler
     }
 }

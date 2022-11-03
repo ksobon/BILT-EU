@@ -1,23 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace Bilt.DockablePanel
 {
     public class DockablePanelViewModel : ViewModelBase
     {
-        // TODO: Implement Refresh RelayCommand
-        // TODO: Add ObservableCollection with MetricWrappers called Metrics
+        public DockablePanelModel Model { get; set; }
+        public RelayCommand Refresh { get; set; }
+
+        private ObservableCollection<MetricWrapper> _metrics = new ObservableCollection<MetricWrapper>();
+        public ObservableCollection<MetricWrapper> Metrics
+        {
+            get { return _metrics; }
+            set { _metrics = value; RaisePropertyChanged(() => Metrics); }
+        }
 
         public DockablePanelViewModel()
         {
-            // TODO: Set Refresh Relay Command
-            // TODO: Register messenger to listen for MetricsRefreshedMessage
+            Model = new DockablePanelModel();
+
+            Refresh = new RelayCommand(OnRefresh);
+
+            Messenger.Default.Register<MetricsRefreshedMessage>(this, OnMetricsRefreshedMessage);
         }
 
-        // TODO: Implement handler for the Refresh command
-        // TODO: Implement MetricsRefreshedMessage handler
-        // - this will update the Metrics collection
+        private void OnRefresh()
+        {
+            Model.Refresh();
+        }
+
+        private void OnMetricsRefreshedMessage(MetricsRefreshedMessage obj)
+        {
+            Metrics = new ObservableCollection<MetricWrapper>(obj.Metrics);
+        }
     }
 }

@@ -16,8 +16,6 @@ namespace Bilt.DockablePanel
             var paneId = new DockablePaneId(new Guid("3044B7F4-A10A-4731-845F-8889F574D04B"));
             try
             {
-                // (Konrad) It's possible that a dock-able panel with the same id already exists
-                // This ensures that we don't get an exception here. 
                 app.RegisterDockablePane(paneId, "BILT", v);
             }
             catch

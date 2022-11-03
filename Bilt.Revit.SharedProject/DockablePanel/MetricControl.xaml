@@ -4,25 +4,33 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             d:DesignHeight="50"
+             d:DesignHeight="100"
              d:DesignWidth="400"
+             Height="50"
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
-        <Label Content="{Binding Name, FallbackValue='Warnings'}"
+        <Border BorderThickness="5,0,0,0"
+                BorderBrush="Gray" 
+                Margin="0,2,0,2"/>
+        <Label Grid.Column="0"
+               Content="{Binding Name, FallbackValue='Warnings'}"
                VerticalAlignment="Center"
                Padding="0"
                Margin="10,0,0,0"
-               FontSize="18"/>
+               FontSize="18"
+               FontWeight="Medium"/>
         <Rectangle Grid.Column="1"
                    Fill="{Binding Color, FallbackValue='Red'}"
-                   Margin="5"/>
+                   Margin="0,2,0,2"/>
         <Label Grid.Column="1"
                Content="{Binding Score, FallbackValue=1000}"
                VerticalAlignment="Center"
-               HorizontalAlignment="Center"/>
+               HorizontalAlignment="Center"
+               FontSize="16"
+               FontWeight="Medium"/>
     </Grid>
 </UserControl>
