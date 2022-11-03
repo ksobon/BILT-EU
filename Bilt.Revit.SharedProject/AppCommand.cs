@@ -19,8 +19,10 @@ namespace Bilt
             {
                 // ignored
             }
-
-#if Revit2022
+#if Revit2020
+            var ribbonPanel = app.GetRibbonPanels("BILT").FirstOrDefault(x => x.Name == "BILT 2020") ??
+                              app.CreateRibbonPanel("BILT", "BILT 2020");
+#elif Revit2022
             var ribbonPanel = app.GetRibbonPanels("BILT").FirstOrDefault(x => x.Name == "BILT 2022") ??
                               app.CreateRibbonPanel("BILT", "BILT 2022");
 #else
