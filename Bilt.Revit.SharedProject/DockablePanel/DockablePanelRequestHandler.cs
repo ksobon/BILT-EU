@@ -58,7 +58,17 @@ namespace Bilt.DockablePanel
             var roomsColor = new SolidColorBrush(rooms.Count > 0 ? Colors.LightCoral : Colors.LightGreen);
             var roomsMetric = new MetricWrapper("Unplaced Rooms", roomsScore, roomsColor);
 
-            var metrics = new List<MetricWrapper> {warningsMetric, roomsMetric};
+            var groups = new FilteredElementCollector(doc)
+                .OfCategory(BuiltInCategory.OST_IOSModelGroups)
+                .WhereElementIsElementType()
+                .Cast<GroupType>()
+                .Where(x => x.Groups.IsEmpty)
+                .ToList();
+            var groupsScore = groups.Count.ToString();
+            var groupsColor = new SolidColorBrush(groups.Count > 0 ? Colors.LightCoral : Colors.LightGreen);
+            var groupsMetric = new MetricWrapper("Unplaced Groups", groupsScore, groupsColor);
+
+            var metrics = new List<MetricWrapper> {warningsMetric, roomsMetric, groupsMetric};
             Messenger.Default.Send(new MetricsRefreshedMessage(metrics));
         }
 
