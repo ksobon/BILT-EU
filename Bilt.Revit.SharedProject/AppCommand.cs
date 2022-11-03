@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
 using Bilt.DockablePanel;
 
@@ -6,8 +7,8 @@ namespace Bilt
 {
     public class AppCommand : IExternalApplication
     {
-        // TODO: Add DockablePanelRequestHandler property
-        // TODO: Add ExternalEvent property
+        public static DockablePanelRequestHandler Handler { get; set; }
+        public static ExternalEvent Event { get; set; }
 
         public Result OnStartup(UIControlledApplication app)
         {
@@ -30,21 +31,42 @@ namespace Bilt
 
             DockablePanelCommand.CreateButton(ribbonPanel);
 
-            // TODO: Assign DockablePanelRequestHandler
-            // TODO: Assign DockablePanelRequestHandler to ExternalEvent
+            Handler = new DockablePanelRequestHandler();
+            Event = ExternalEvent.Create(Handler);
 
-            // TODO: Add events for:
-            // - DocumentOpened
-            // - SynchFinished
-            // - Saved etc.
+            app.ControlledApplication.DocumentOpened += OnDocumentOpened;
+            app.ControlledApplication.DocumentSaved += OnDocumentSaved;
+            app.ControlledApplication.DocumentSynchronizedWithCentral += OnDocumentSynched;
 
             DockablePanelUtils.RegisterDockablePanel(app);
 
             return Result.Succeeded;
         }
 
-        public Result OnShutdown(UIControlledApplication application)
+        private static void OnDocumentSynched(object sender, DocumentSynchronizedWithCentralEventArgs e)
         {
+            Handler.Request = RequestId.Refresh;
+            Event.Raise();
+        }
+
+        private static void OnDocumentSaved(object sender, DocumentSavedEventArgs e)
+        {
+            Handler.Request = RequestId.Refresh;
+            Event.Raise();
+        }
+
+        private static void OnDocumentOpened(object sender, DocumentOpenedEventArgs e)
+        {
+            Handler.Request = RequestId.Refresh;
+            Event.Raise();
+        }
+
+        public Result OnShutdown(UIControlledApplication app)
+        {
+            app.ControlledApplication.DocumentOpened -= OnDocumentOpened;
+            app.ControlledApplication.DocumentSaved -= OnDocumentSaved;
+            app.ControlledApplication.DocumentSynchronizedWithCentral -= OnDocumentSynched;
+
             return Result.Succeeded;
         }
     }
