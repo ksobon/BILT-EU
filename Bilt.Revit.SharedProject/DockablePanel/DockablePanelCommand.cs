@@ -14,7 +14,8 @@ namespace Bilt.DockablePanel
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            // TODO: ShowDockable Panel
+            DockablePanelUtils.ShowDockablePanel(commandData.Application);
+
             return Result.Succeeded;
         }
 
