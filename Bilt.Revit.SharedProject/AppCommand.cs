@@ -40,7 +40,7 @@ namespace Bilt
             // - SynchFinished
             // - Saved etc.
 
-            // TODO: Register DockablePanel
+            DockablePanelUtils.RegisterDockablePanel(app);
 
             return Result.Succeeded;
         }

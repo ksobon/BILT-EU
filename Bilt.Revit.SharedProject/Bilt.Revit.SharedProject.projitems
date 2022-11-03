@@ -16,6 +16,7 @@
       <DependentUpon>DockablePanelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DockablePanel\DockablePanelRequestHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DockablePanel\DockablePanelUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DockablePanel\DockablePanelViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DockablePanel\MetricControl.xaml.cs">
       <DependentUpon>MetricControl.xaml</DependentUpon>
